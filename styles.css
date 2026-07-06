@@ -135,14 +135,6 @@ html, body {
     conic-gradient(from 0deg at 78% 45%, rgba(116,204,0,0.16), transparent 12%, transparent 100%),
     repeating-radial-gradient(circle at 78% 45%, rgba(116,204,0,0.16) 0px, rgba(116,204,0,0.16) 1.5px, transparent 1.5px, transparent 70px),
     radial-gradient(circle at 78% 45%, rgba(30,47,69,0.9) 0%, transparent 60%);
-  animation: radarSweep 90s linear infinite;
-}
-@keyframes radarSweep {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-  #screen-welcome::before { animation: none; }
 }
 
 .eyebrow {
