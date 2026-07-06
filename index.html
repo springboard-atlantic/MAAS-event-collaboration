@@ -14,9 +14,8 @@
 
 <div id="app">
 
-  <header class="site-header">
-    <img src="assets/logo.png" alt="Springboard Atlantic" class="site-logo" />
-  </header>
+  <img src="assets/logo.png" alt="Springboard Atlantic" class="site-logo" />
+  <button class="btn-home" id="btn-home" title="Back to home for the next visitor">⌂ Home</button>
 
   <!-- Progress dots (hidden on welcome/thankyou) -->
   <div class="progress" id="progress" hidden>
@@ -27,34 +26,31 @@
 
   <!-- SCREEN: Welcome -->
   <section class="screen active" id="screen-welcome">
-    <div class="welcome-grid">
-      <div class="welcome-copy">
-        <p class="eyebrow"># intellectual property</p>
-        <h1>Looking for<br>Defence - Dual-use<br> <span class="accent">Research Collaboration?</span></h1>
-        <p class="lede">Tell us about a challenge you're facing — we'll match you on the spot with Atlantic Canada's research labs, facility, and experts who can help.</p>
-        <ul class="stat-row">
-          <li><strong>10,000</strong> Researchers</li>
-          <li><strong>19</strong> Universities &amp; Colleges</li>
-          <li><strong>40+</strong> Industry Engagement Professionals</li>
-        </ul>
-        <button class="btn btn-primary btn-large" id="btn-start">Start &nbsp;→</button>
-      </div>
-      <div class="welcome-banner">
-        <img src="assets/banner.png" alt="Springboard Atlantic — Where Industry Meets Research" />
-      </div>
+    <div class="welcome-content">
+      <p class="eyebrow"># intellectual property</p>
+      <h1>Looking for<br>Defence &ndash; Dual-use<br><span class="accent">Research Collaboration?</span></h1>
+      <p class="lede">Tell us about a challenge you're facing &mdash; we'll match you on the spot with Atlantic Canada's research labs, facility, and experts who can help.</p>
+      <ul class="stat-row">
+        <li><strong>10,000</strong> Researchers</li>
+        <li><strong>19</strong> Universities &amp; Colleges</li>
+        <li><strong>40+</strong> Industry Engagement Professionals</li>
+      </ul>
+      <button class="btn btn-primary btn-large" id="btn-start">Start &nbsp;→</button>
     </div>
   </section>
 
   <!-- SCREEN: Problem question -->
   <section class="screen" id="screen-problem">
     <div class="panel">
-      <p class="step-label">Step 1 of 3</p>
-      <h2>What problem are you looking to solve?</h2>
-      <p class="hint">Pick the area closest to your challenge (you can pick more than one).</p>
-      <div class="chip-grid" id="category-chips"></div>
+      <div class="panel-scroll">
+        <p class="step-label">Step 1 of 3</p>
+        <h2>What problem are you looking to solve?</h2>
+        <p class="hint">Pick the area(s) closest to your challenge.</p>
+        <div class="chip-grid" id="category-chips"></div>
 
-      <label class="field-label" for="open-question">Tell us more in your own words <span class="optional">(optional)</span></label>
-      <textarea id="open-question" rows="3" placeholder="e.g. We need a way to detect equipment corrosion before it fails in the field..."></textarea>
+        <label class="field-label" for="open-question">Tell us more in your own words <span class="optional">(optional)</span></label>
+        <textarea id="open-question" rows="2" placeholder="e.g. We need a way to detect equipment corrosion before it fails in the field..."></textarea>
+      </div>
 
       <div class="nav-row">
         <button class="btn btn-ghost" id="btn-back-to-welcome">← Back</button>
@@ -66,54 +62,63 @@
   <!-- SCREEN: Recommendations -->
   <section class="screen" id="screen-results">
     <div class="panel panel-wide">
-      <p class="step-label">Step 2 of 3</p>
-      <h2>Capabilities that match your challenge</h2>
-      <p class="hint" id="results-hint"></p>
-      <div class="results-grid" id="results-grid"></div>
-      <button class="btn btn-ghost btn-small" id="btn-more-results" hidden>Show more matches</button>
-
-      <div class="cta-box">
-        <h3>Want the full detail on any of these?</h3>
-        <p>Leave your contact info and one of our Industry Engagement Professionals will follow up with more information.</p>
-        <div class="nav-row">
-          <button class="btn btn-ghost" id="btn-no-thanks">No thanks, just browsing</button>
-          <button class="btn btn-primary" id="btn-yes-contact">Yes, follow up with me →</button>
+      <div class="panel-scroll">
+        <p class="step-label">Step 2 of 3</p>
+        <h2>Capabilities that match your challenge</h2>
+        <p class="hint" id="results-hint"></p>
+        <label class="select-all-row">
+          <input type="checkbox" id="select-all-checkbox" />
+          <span>Select All</span>
+        </label>
+        <div class="results-scroll-wrap">
+          <div class="results-list" id="results-list"></div>
+          <button type="button" class="scroll-arrow scroll-arrow-left" id="scroll-arrow-left" hidden aria-label="Scroll left">‹</button>
+          <button type="button" class="scroll-arrow scroll-arrow-right" id="scroll-arrow-right" hidden aria-label="Scroll right">›</button>
         </div>
       </div>
-      <button class="btn btn-ghost btn-small" id="btn-back-to-problem">← Back to my problem</button>
+
+      <div class="cta-row">
+        <p class="cta-copy">Want the full list of matches, plus a personal introduction to the right experts? Tick the ones you're interested in and leave your info.</p>
+        <div class="nav-row">
+          <button class="btn btn-ghost" id="btn-back-to-problem">← Back</button>
+          <button class="btn btn-primary" id="btn-yes-contact">Want Full List or More Details →</button>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- SCREEN: Contact form -->
   <section class="screen" id="screen-contact">
     <div class="panel">
-      <p class="step-label">Step 3 of 3</p>
-      <h2>Let's stay in touch</h2>
-      <p class="hint">Just the basics — no spam, we promise.</p>
-      <form id="contact-form">
-        <label class="field-label" for="c-name">Name <span class="req">*</span></label>
-        <input class="text-input" type="text" id="c-name" required autocomplete="name" />
+      <div class="panel-scroll">
+        <p class="step-label">Step 3 of 3</p>
+        <h2>Let's connect you with the right experts</h2>
+        <p class="hint">Leave your info and a Springboard Atlantic Industry Engagement Professional will send you the full details and make the introduction.</p>
+        <form id="contact-form">
+          <label class="field-label" for="c-name">Name <span class="req">*</span></label>
+          <input class="text-input" type="text" id="c-name" required autocomplete="name" />
 
-        <label class="field-label" for="c-email">Email <span class="req">*</span></label>
-        <input class="text-input" type="email" id="c-email" required autocomplete="email" />
+          <label class="field-label" for="c-email">Email <span class="req">*</span></label>
+          <input class="text-input" type="email" id="c-email" required autocomplete="email" />
 
-        <label class="field-label" for="c-org">Company / Organization</label>
-        <input class="text-input" type="text" id="c-org" autocomplete="organization" />
+          <label class="field-label" for="c-org">Company / Organization</label>
+          <input class="text-input" type="text" id="c-org" autocomplete="organization" />
 
-        <label class="field-label" for="c-request">Anything specific you'd like us to follow up on? <span class="optional">(optional)</span></label>
-        <textarea id="c-request" rows="3" placeholder="e.g. Please connect me with the Ocean Technology team at..."></textarea>
+          <label class="field-label" for="c-request">Anything specific you'd like us to follow up on? <span class="optional">(optional)</span></label>
+          <textarea id="c-request" rows="2" placeholder="e.g. Please connect me with the Ocean Technology team at..."></textarea>
+        </form>
+      </div>
 
-        <div class="nav-row">
-          <button type="button" class="btn btn-ghost" id="btn-back-to-results">← Back</button>
-          <button type="submit" class="btn btn-primary">Submit →</button>
-        </div>
-      </form>
+      <div class="nav-row">
+        <button type="button" class="btn btn-ghost" id="btn-back-to-results">← Back</button>
+        <button type="submit" form="contact-form" class="btn btn-primary">Submit →</button>
+      </div>
     </div>
   </section>
 
   <!-- SCREEN: Thank you -->
   <section class="screen" id="screen-thankyou">
-    <div class="panel panel-center">
+    <div class="welcome-content">
       <div class="check-badge">✓</div>
       <h2>Thanks, <span id="thankyou-name">friend</span>!</h2>
       <p class="lede">We've got your details and a member of the Springboard Atlantic network will be in touch soon.</p>
@@ -121,9 +126,16 @@
     </div>
   </section>
 
-  <!-- Idle overlay -->
-  <div id="idle-overlay" hidden>
-    <p>Still there? Tap anywhere to continue.</p>
+  <!-- Idle popup — only on the recommendations screen, after ~20s of inactivity -->
+  <div id="idle-popup" hidden>
+    <div class="popup-box">
+      <h3>Want the full list &amp; expert connection?</h3>
+      <p>Leave your email, contact name, and company &mdash; we'll send the complete match list and have Springboard Atlantic connect you directly with the right experts.</p>
+      <div class="nav-row">
+        <button class="btn btn-ghost" id="btn-idle-dismiss">Keep browsing</button>
+        <button class="btn btn-primary" id="btn-idle-yes">Yes, leave my info →</button>
+      </div>
+    </div>
   </div>
 
   <!-- Admin panel (hidden, opened via footer tap sequence or ?admin=1) -->

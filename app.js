@@ -2,41 +2,40 @@
   'use strict';
 
   // ---------------------------------------------------------------------
-  // Problem categories — framed around defence/industry mission areas
-  // (drawn from the Defence Brief) rather than raw academic cluster labels,
-  // then matched against data.js records via keyword scoring.
+  // Problem categories — defence/dual-use mission areas, matched against
+  // data.js records (organization, cluster, program, description) via
+  // keyword scoring.
   // ---------------------------------------------------------------------
   const CATEGORIES = [
-    { id: 'maritime', label: 'Maritime & Naval / Shipbuilding',
-      keywords: ['ship', 'naval', 'marine', 'vessel', 'submarine', 'offshore', 'hull', 'maritime', 'ocean engineering', 'fleet'] },
-    { id: 'autonomous', label: 'Autonomous & Uncrewed Systems',
-      keywords: ['autonom', 'uncrewed', 'unmanned', 'drone', 'auv', 'uuv', 'uav', 'robot', 'glider'] },
-    { id: 'surveillance', label: 'Domain Awareness & Surveillance',
-      keywords: ['surveillance', 'sonar', 'acoustic', 'radar', 'awareness', 'tracking', 'monitoring', 'sensor', 'detection', 'imaging'] },
-    { id: 'arctic', label: 'Arctic Operations & Search and Rescue',
-      keywords: ['arctic', 'ice', 'cold climate', 'search and rescue', 'northern', 'polar', 'winter'] },
-    { id: 'cyber', label: 'Cybersecurity, Data & AI',
-      keywords: ['cyber', 'security', 'data analytic', 'artificial intelligence', ' ai ', 'machine learning', 'information system', 'digital', 'software'] },
-    { id: 'materials', label: 'Advanced Materials & Manufacturing',
-      keywords: ['material', 'manufactur', 'composite', 'additive', '3d print', 'welding', 'automation', 'fabrication', 'prototyp'] },
-    { id: 'energy', label: 'Energy Systems & Clean Technology',
-      keywords: ['energy', 'nuclear', 'smr', 'power', 'renewable', 'clean tech', 'hydro', 'electric', 'sustainab'] },
-    { id: 'health', label: 'Human Performance, Health & Wellness',
-      keywords: ['health', 'wellness', 'nutrition', 'biomechanic', 'rehabilitation', 'human performance', 'psycholog', 'kinesiology'] },
-    { id: 'policy', label: 'Policy, Security Studies & Training',
-      keywords: ['polic', 'security stud', 'international security', 'defence stud', 'training', 'heritage', 'history', 'community'] },
-    { id: 'testing', label: 'Testing & Prototype Products',
-      keywords: ['test', 'prototyp', 'pilot', 'trial', 'demonstrat', 'validat', 'proof of concept'] },
-    { id: 'rd', label: 'R&D Collaboration',
-      keywords: ['collaborat', 'partnership', 'r&d', 'research and development', 'joint research', 'co-development'] },
-    { id: 'ip', label: 'Intellectual Property',
-      keywords: ['intellectual property', 'patent', 'licens', 'commercializ', 'technology transfer'] },
-    { id: 'ops', label: 'Operations Optimization',
-      keywords: ['operation', 'optimiz', 'efficiency', 'process improvement', 'productivity', 'supply chain', 'logistics'] },
-    { id: 'other', label: 'Something else / Not sure yet', keywords: [] },
+    { id: 'materials', label: 'Advanced Materials',
+      keywords: ['material', 'composite', 'additive', '3d print', 'alloy', 'coating', 'corrosion', 'polymer', 'ceramic', 'metallurg'] },
+    { id: 'ai', label: 'AI',
+      keywords: ['artificial intelligence', 'machine learning', 'data analytic', 'deep learning', 'neural network', 'computer vision', 'big data', 'algorithm'] },
+    { id: 'clean', label: 'Clean Technology',
+      keywords: ['clean energy', 'renewable', 'hydro power', 'solar', 'wind energy', 'sustainab', 'carbon', 'green technology', 'emission', 'climate technolog', 'smr'] },
+    { id: 'cyber', label: 'Cyber Resilience',
+      keywords: ['cyber', 'information security', 'network security', 'threat detection', 'resilien', 'encryption', 'information system'] },
+    { id: 'autonomous', label: 'Remote & Autonomous Technologies',
+      keywords: ['autonom', 'uncrewed', 'unmanned', 'drone', 'auv', 'uuv', 'uav', 'robot', 'remote sensing', 'remote operat', 'teleoperat', 'glider'] },
+    { id: 'space', label: 'Space Systems',
+      keywords: ['space', 'satellite', 'orbital', 'ionospher'] },
+    { id: 'aerospace', label: 'Aerospace',
+      keywords: ['aerospace', 'aircraft', 'aviation', 'flight', 'aerodynamic', 'avionics'] },
+    { id: 'eoir', label: 'EO/IR Sensors',
+      keywords: ['electro-optic', 'infrared', 'imaging', 'sensor', 'optical sensor', 'thermal imaging', 'camera system'] },
+    { id: 'shipborne', label: 'Marine Ship-Borne Mission',
+      keywords: ['shipborne', 'mission system', 'naval mission', 'onboard system', 'vessel-based', 'marine operations', 'offshore platform'] },
+    { id: 'shipbuilding', label: 'Shipbuilding & Engineering',
+      keywords: ['shipbuild', 'naval architecture', 'hull', 'vessel design', 'marine engineering', 'welding', 'fabrication', 'offshore engineering'] },
+    { id: 'sonar', label: 'Sonar & Acoustic Systems',
+      keywords: ['sonar', 'acoustic', 'hydroacoustic', 'underwater acoustic', 'hydrophone', 'signal processing'] },
+    { id: 'training', label: 'Training & Simulation',
+      keywords: ['training', 'simulation', 'simulator', 'virtual reality', 'synthetic environment', 'serious game'] },
+    { id: 'other', label: 'Other', keywords: [] },
   ];
 
   const DATA = window.CAPABILITY_DATA || [];
+  const MAX_RESULTS_SHOWN = 20;
 
   // ---------------------------------------------------------------------
   // State
@@ -45,8 +44,8 @@
     selectedCategories: new Set(),
     openText: '',
     lastResults: [],
-    resultsShown: 6,
-    contact: null,
+    selectedResultIndices: new Set(),
+    idlePopupTrigger: false,
   };
 
   const LEADS_KEY = 'sba_kiosk_leads_v1';
@@ -71,7 +70,7 @@
         d.classList.toggle('active', Number(d.dataset.step) <= step);
       });
     }
-    window.scrollTo(0, 0);
+    if (name === 'results') armResultsIdleTimer(); else disarmResultsIdleTimer();
   }
 
   // ---------------------------------------------------------------------
@@ -118,9 +117,6 @@
     return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
-  // Single-word keywords use a leading word-boundary so "ship" matches
-  // "shipbuilding" but not "membership"/"leadership"; multi-word phrases
-  // are matched as plain substrings.
   function keywordMatches(keyword, haystack) {
     const kw = keyword.trim();
     if (/\s/.test(kw)) return haystack.includes(kw.toLowerCase());
@@ -153,7 +149,6 @@
 
     const noSignal = activeKeywords.length === 0 && freeTextTokens.length === 0;
     if (noSignal) {
-      // no info given — just show a broad sample
       scored.sort(() => Math.random() - 0.5);
     } else {
       scored = scored.filter(s => s.score > 0);
@@ -168,41 +163,79 @@
     return div.innerHTML;
   }
 
+  const selectAllCheckbox = document.getElementById('select-all-checkbox');
+  const scrollArrowLeft = document.getElementById('scroll-arrow-left');
+  const scrollArrowRight = document.getElementById('scroll-arrow-right');
+
+  function updateSelectAllState() {
+    const boxes = [...document.querySelectorAll('.result-card input[type="checkbox"]')];
+    selectAllCheckbox.checked = boxes.length > 0 && boxes.every(b => b.checked);
+  }
+
+  function updateScrollArrows() {
+    const list = document.getElementById('results-list');
+    const maxScroll = list.scrollWidth - list.clientWidth;
+    scrollArrowLeft.hidden = list.scrollLeft <= 4;
+    scrollArrowRight.hidden = list.scrollLeft >= maxScroll - 4;
+  }
+
   function renderResults() {
-    const grid = document.getElementById('results-grid');
+    const list = document.getElementById('results-list');
     const hint = document.getElementById('results-hint');
-    const moreBtn = document.getElementById('btn-more-results');
-    grid.innerHTML = '';
+    list.innerHTML = '';
+    list.scrollLeft = 0;
+    state.selectedResultIndices.clear();
+    selectAllCheckbox.checked = false;
+    scrollArrowLeft.hidden = true;
+    scrollArrowRight.hidden = true;
 
     const results = state.lastResults;
     if (!results.length) {
-      grid.innerHTML = '<p class="no-results">We couldn\'t find an exact match — but our team covers a huge range of labs and expertise across Atlantic Canada. Leave your info below and we\'ll follow up personally.</p>';
+      list.innerHTML = '<p class="no-results">We couldn\'t find an exact match — but our team covers a huge range of labs and expertise across Atlantic Canada. Leave your info below and we\'ll follow up personally.</p>';
       hint.textContent = '';
-      moreBtn.hidden = true;
       return;
     }
 
-    hint.textContent = `Showing ${Math.min(state.resultsShown, results.length)} of ${results.length} matching capabilities.`;
+    const shown = results.slice(0, MAX_RESULTS_SHOWN);
+    hint.textContent = `Showing ${shown.length} of ${results.length} matching capabilities — swipe right for more, tick any you'd like more on.`;
 
-    results.slice(0, state.resultsShown).forEach(r => {
+    shown.forEach((r, i) => {
       const card = document.createElement('div');
       card.className = 'result-card';
       card.innerHTML = `
+        <input type="checkbox" data-index="${i}" />
         <span class="org">${escapeHTML(r.organization)}</span>
         <h4>${escapeHTML(r.program || r.cluster)}</h4>
-        ${r.cluster ? `<span class="cluster-tag">${escapeHTML(r.cluster)}</span>` : ''}
-        <p class="desc">${escapeHTML((r.description || '').slice(0, 220))}${r.description && r.description.length > 220 ? '…' : ''}</p>
-        ${r.link ? `<a class="learn-more" href="${escapeHTML(r.link)}" target="_blank" rel="noopener">Learn more →</a>` : ''}
+        <p class="desc">${escapeHTML((r.description || '').slice(0, 130))}${r.description && r.description.length > 130 ? '…' : ''}</p>
       `;
-      grid.appendChild(card);
+      const checkbox = card.querySelector('input[type="checkbox"]');
+      checkbox.addEventListener('change', () => {
+        if (checkbox.checked) state.selectedResultIndices.add(i);
+        else state.selectedResultIndices.delete(i);
+        updateSelectAllState();
+      });
+      list.appendChild(card);
     });
 
-    moreBtn.hidden = state.resultsShown >= results.length;
+    // Defer overflow measurement until layout has settled.
+    requestAnimationFrame(updateScrollArrows);
   }
 
-  document.getElementById('btn-more-results').addEventListener('click', () => {
-    state.resultsShown += 6;
-    renderResults();
+  selectAllCheckbox.addEventListener('change', () => {
+    const checked = selectAllCheckbox.checked;
+    document.querySelectorAll('.result-card input[type="checkbox"]').forEach((box, i) => {
+      box.checked = checked;
+      if (checked) state.selectedResultIndices.add(i); else state.selectedResultIndices.delete(i);
+    });
+  });
+
+  const CARD_SCROLL_STEP = 210; // card width (190px) + gap (10px), plus a little extra
+  document.getElementById('results-list').addEventListener('scroll', updateScrollArrows, { passive: true });
+  scrollArrowLeft.addEventListener('click', () => {
+    document.getElementById('results-list').scrollBy({ left: -CARD_SCROLL_STEP, behavior: 'smooth' });
+  });
+  scrollArrowRight.addEventListener('click', () => {
+    document.getElementById('results-list').scrollBy({ left: CARD_SCROLL_STEP, behavior: 'smooth' });
   });
 
   // ---------------------------------------------------------------------
@@ -214,20 +247,20 @@
 
   document.getElementById('btn-to-results').addEventListener('click', () => {
     state.openText = openQuestionEl.value.trim();
-    state.resultsShown = 6;
     state.lastResults = computeResults();
     renderResults();
     showScreen('results');
   });
 
   document.getElementById('btn-back-to-problem').addEventListener('click', () => showScreen('problem'));
-
-  document.getElementById('btn-no-thanks').addEventListener('click', () => {
-    resetKiosk();
+  document.getElementById('btn-yes-contact').addEventListener('click', () => {
+    state.idlePopupTrigger = false;
+    showScreen('contact');
   });
-
-  document.getElementById('btn-yes-contact').addEventListener('click', () => showScreen('contact'));
   document.getElementById('btn-back-to-results').addEventListener('click', () => showScreen('results'));
+
+  document.getElementById('btn-home').addEventListener('click', resetKiosk);
+  document.getElementById('btn-restart').addEventListener('click', resetKiosk);
 
   // ---------------------------------------------------------------------
   // Contact form + lead storage
@@ -250,13 +283,22 @@
     const org = document.getElementById('c-org').value.trim();
     const request = document.getElementById('c-request').value.trim();
 
+    const selectedPrograms = [...state.selectedResultIndices]
+      .sort((a, b) => a - b)
+      .map(i => state.lastResults[i])
+      .filter(Boolean)
+      .map(r => `${r.organization} – ${r.program || r.cluster}`)
+      .join(' | ');
+
     const lead = {
       timestamp: new Date().toISOString(),
       name, email, organization: org,
       problem_categories: [...state.selectedCategories].map(id => (CATEGORIES.find(c => c.id === id) || {}).label).join('; '),
       problem_details: state.openText,
       request,
-      matched_programs: state.lastResults.slice(0, 6).map(r => `${r.organization} – ${r.program || r.cluster}`).join(' | '),
+      selected_programs: selectedPrograms,
+      matched_programs: state.lastResults.slice(0, MAX_RESULTS_SHOWN).map(r => `${r.organization} – ${r.program || r.cluster}`).join(' | '),
+      follow_up_trigger: state.idlePopupTrigger ? 'idle_popup' : 'manual',
     };
 
     const leads = getLeads();
@@ -264,46 +306,58 @@
     saveLeads(leads);
 
     document.getElementById('thankyou-name').textContent = name.split(' ')[0] || 'friend';
+    state.idlePopupTrigger = false;
     showScreen('thankyou');
   });
-
-  document.getElementById('btn-restart').addEventListener('click', resetKiosk);
 
   function resetKiosk() {
     state.selectedCategories.clear();
     state.openText = '';
     state.lastResults = [];
-    state.resultsShown = 6;
+    state.selectedResultIndices.clear();
+    state.idlePopupTrigger = false;
     document.querySelectorAll('.chip.selected').forEach(c => c.classList.remove('selected'));
     openQuestionEl.value = '';
     document.getElementById('contact-form').reset();
+    idlePopup.hidden = true;
     showScreen('welcome');
   }
 
   // ---------------------------------------------------------------------
-  // Idle timeout — auto-reset kiosk to welcome after inactivity
+  // Idle popup — scoped to the recommendations screen only. After ~20s of
+  // inactivity while viewing results, offer the full-list/expert-connection
+  // CTA. This is a helpful nudge, not a kiosk reset — dismissing just
+  // continues browsing.
   // ---------------------------------------------------------------------
-  const IDLE_WARN_MS = 45000; // show overlay after 45s idle (skip on welcome/thankyou)
-  let idleTimer = null;
-  const idleOverlay = document.getElementById('idle-overlay');
+  const RESULTS_IDLE_MS = 15000;
+  const idlePopup = document.getElementById('idle-popup');
+  let resultsIdleTimer = null;
 
-  function armIdleTimer() {
-    clearTimeout(idleTimer);
-    const activeScreen = screens.find(s => document.getElementById('screen-' + s).classList.contains('active'));
-    if (activeScreen === 'welcome' || activeScreen === 'thankyou') return;
-    idleTimer = setTimeout(() => { idleOverlay.hidden = false; }, IDLE_WARN_MS);
+  function armResultsIdleTimer() {
+    clearTimeout(resultsIdleTimer);
+    resultsIdleTimer = setTimeout(() => {
+      if (document.getElementById('screen-results').classList.contains('active')) {
+        idlePopup.hidden = false;
+      }
+    }, RESULTS_IDLE_MS);
   }
-  idleOverlay.addEventListener('click', () => {
-    idleOverlay.hidden = true;
-    resetKiosk();
+  function disarmResultsIdleTimer() {
+    clearTimeout(resultsIdleTimer);
+    idlePopup.hidden = true;
+  }
+  document.getElementById('screen-results').addEventListener('click', () => {
+    if (idlePopup.hidden) armResultsIdleTimer();
   });
-  ['click', 'keydown', 'touchstart', 'input'].forEach(evt => {
-    document.addEventListener(evt, () => {
-      if (!idleOverlay.hidden) return;
-      armIdleTimer();
-    });
+
+  document.getElementById('btn-idle-dismiss').addEventListener('click', () => {
+    idlePopup.hidden = true;
+    armResultsIdleTimer();
   });
-  armIdleTimer();
+  document.getElementById('btn-idle-yes').addEventListener('click', () => {
+    idlePopup.hidden = true;
+    state.idlePopupTrigger = true;
+    showScreen('contact');
+  });
 
   // ---------------------------------------------------------------------
   // Admin panel — hidden lead export. Open with ?admin=1 in the URL,
@@ -322,7 +376,7 @@
     document.getElementById('admin-count').textContent = `${leads.length} lead(s) captured on this device.`;
     const table = document.getElementById('admin-table');
     if (!leads.length) { table.innerHTML = ''; return; }
-    const cols = ['timestamp', 'name', 'email', 'organization', 'problem_categories', 'problem_details', 'request', 'matched_programs'];
+    const cols = ['timestamp', 'name', 'email', 'organization', 'problem_categories', 'problem_details', 'request', 'selected_programs', 'matched_programs', 'follow_up_trigger'];
     let html = '<tr>' + cols.map(c => `<th>${c}</th>`).join('') + '</tr>';
     leads.slice().reverse().forEach(l => {
       html += '<tr>' + cols.map(c => `<td>${escapeHTML((l[c] || '').toString().slice(0, 60))}</td>`).join('') + '</tr>';
@@ -339,7 +393,7 @@
 
   document.getElementById('btn-export-csv').addEventListener('click', () => {
     const leads = getLeads();
-    const cols = ['timestamp', 'name', 'email', 'organization', 'problem_categories', 'problem_details', 'request', 'matched_programs'];
+    const cols = ['timestamp', 'name', 'email', 'organization', 'problem_categories', 'problem_details', 'request', 'selected_programs', 'matched_programs', 'follow_up_trigger'];
     const rows = [cols.join(',')].concat(
       leads.map(l => cols.map(c => csvEscape(l[c])).join(','))
     );
