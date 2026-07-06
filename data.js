@@ -583,126 +583,6 @@ window.CAPABILITY_DATA = [
     "program": "GeoREACH Lab",
     "description": "The GeoREACH Lab supports Geospatial Research in Atlantic Canadian History and other projects of the Applied, Communications, Leadership & Culture (ACLC) program in the Faculty of Arts at the University of Prince Edward Island. Researchers in the GeoREACH Lab are engaged in a variety of projects, from faculty-directed mapping initiatives to student research assistance on the lab’s core projects. The lab team uses Geographic Information Systems (GIS) to digitize historical maps and geospatial characteristics of rural food and energy systems in the nineteenth and twentieth centuries.",
     "link": "https://projects.upei.ca/geolab/"
-  },
-  {
-    "ecosystem": "Public & Independent Research",
-    "organization": "Canadian Nuclear Laboratories",
-    "cluster": "Safety & Security",
-    "program": "National Innovation Centre for Cybersecurity",
-    "description": "As part of Canada’s nuclear energy R&D organization, CNL opened a specialized centre in Fredericton’s Cyber Centre in 2018 focusing on cybersecurity for critical infrastructure. This National Innovation Centre for Cybersecurity (NICC) is aimed at protecting industrial control systems (like those in nuclear power plants, smart grids, etc.) from cyber threats. CNL’s team in NB works on cybersecurity solutions and testing for operational technology systems, complementing the academic research at UNB’s CIC. They have been involved in cyber exercises and developed a state-of-the-art facility to simulate and respond to cyber incidents in critical infrastructure. The presence of CNL in NB is tied to the province’s unique position in nuclear energy (with the Point Lepreau Nuclear Generating Station and planned SMRs). It represents a federal commitment to leverage NB’s cybersecurity cluster for national security needs. CNL collaborates with local companies (for example, joint training with industry partners) and with NB Power’s digital team. This adds a distinctive dimension to NB’s innovation ecosystem at the intersection of energy and cybersecurity. For NB, having NICC means local talent can engage in cutting-edge national projects (which helps retain highly skilled cyber professionals in-province) and any startups or solutions coming out of NICC’s work could have commercial spin-offs (for instance, tools for utility cybersecurity that could be productized).",
-    "link": "https://www.cnl.ca/safety-security/cyber-resiliency-for-critical-infrastructure/"
-  },
-  {
-    "ecosystem": "Public & Independent Research",
-    "organization": "St. Andrews Biological Station (SABS)",
-    "cluster": "Research Center",
-    "program": "Coastal Ocean Research",
-    "description": "SABS oceanographic focus is on the coastal marine environment, an area that is heavily utilized for a variety of industrial and recreational activities. The aim is to identify links between the physical components (such as water temperature, salinity, and currents) and the marine ecosystem using a combination of field work, data analysis and computer modeling. Work has focused on interactions between aquaculture and oceanographic conditions. We are assisting the aquaculture industry to develop management areas to reduce environmental impacts such as changes to the ocean bottom under sea cages, improved disease management and more. SABS oceanographers are also providing information on offshore aquaculture development.",
-    "link": "https://www.mar.dfo-mpo.gc.ca/en/coastal-ocean-research-sabs"
-  },
-  {
-    "ecosystem": "Accelerators, Incubators, VCs and Sandboxes",
-    "organization": "CO Innovation Center",
-    "cluster": "Space & Collaboration",
-    "program": "Membership",
-    "description": "Our membership program offers businesses access to a wealth of resources, expert support, and a dynamic network of industry leaders and innovators.",
-    "link": "https://coic.co/membership/"
-  },
-  {
-    "ecosystem": "Accelerators, Incubators, VCs and Sandboxes",
-    "organization": "CO Innovation Center",
-    "cluster": "Space & Collaboration",
-    "program": "Sector Support",
-    "description": "At Co. Innovation Centre, we drive innovation in energy, mining, manufacturing & ocean, renewable resources, aerospace & defense, ocean tech and much more by fostering collaboration, advancing technologies, and promoting sustainability.",
-    "link": "https://coic.co/sectors/"
-  },
-  {
-    "ecosystem": "Accelerators, Incubators, VCs and Sandboxes",
-    "organization": "Killick Capital",
-    "cluster": "Financial/ Funding",
-    "program": "Aerospace Fund",
-    "description": "The Killick Aerospace Fund focuses primarily on supply chain management companies in the aerospace sector. In partnership with company teams, we advance businesses by providing industry, strategic and business expertise.",
-    "link": "https://killickcapital.com/portfolio/#tab-2-link"
-  },
-  {
-    "ecosystem": "Sector Specific Resources",
-    "organization": "Atlantic Canada Aerospace & Defense Association (AC-ADA)",
-    "cluster": "Competitiveness",
-    "program": "MACH Atlantic",
-    "description": "MACH Atlantic is a unique regional program opportunity for sponsor and participant companies to elevate, engage and attain supply chain innovation and continuous improvement levels acknowledged by Original Equipment Manufacturers (OEM’s) and defence Primes globally. The proven MACH framework identifies key business improvement areas and a pathway to closing these gaps to accelerate supply chain and operational excellence. This program was developed by Aéro Montréal’s Supply Chain Development Working Group which mobilized more than 100 industry professionals. The mission was to specifically address the issues and challenges of the supply chain, recognizing that effective management of the supply chain is a key competitive driver for companies in the sector.",
-    "link": "https://ac-ada.ca/mach-atlantic/"
-  },
-  {
-    "ecosystem": "Sector Specific Resources",
-    "organization": "Atlantic Canada Aerospace & Defense Association (AC-ADA)",
-    "cluster": "Financial/ Funding",
-    "program": "Digital Adoption Program",
-    "description": "ACADA’s Digital Adoption Program (“the Program”) aims to assist SMEs in furthering their digital transformation. Adopting and investing in digital best practices can help boost business capacity and improve operational efficiency and productivity. The Program is intended to support SMEs that have already taken advantage of the Canada Digital Adoption Program (CDAP), or those that are not eligible for the Program. ACADA’s funding is meant to augment the resources available through CDAP, not replace nor duplicate. The minimum project cost to qualify is $5,000. Approved projects will be cost-shared between ACADA and the SME. The maximum project cost supported is $18,000, with ACADA covering 65% of the total cost and the SME covering 35%.",
-    "link": "https://ac-ada.ca/greening-esg-program/"
-  },
-  {
-    "ecosystem": "Sector Specific Resources",
-    "organization": "Atlantic Canada Aerospace & Defense Association (AC-ADA)",
-    "cluster": "Financial/ Funding",
-    "program": "Greening & ESG Initiative",
-    "description": "The Atlantic Canada Aerospace & Defence Association (ACADA), with the support of the Atlantic Canada Opportunities Agency (ACOA), is introducing the Greening & ESG Initiative (“the Program”) to support Small and Medium Enterprises (SMEs) within the Aerospace, Defence, and Security industries. The Greening & ESG Initiative aims to assist SMEs in developing eco-responsible products, processes, and market entry strategies by providing expertise and tools to minimize environmental impact throughout the product life cycle. The minimum project cost to qualify is $5,000. Approved projects will be cost-shared between ACADA and the SME. The maximum project cost eligible for support is $15,000, with the SME responsible for 35% of the total cost.",
-    "link": "https://ac-ada.ca/greening-esg-program/"
-  },
-  {
-    "ecosystem": "Sector Specific Resources",
-    "organization": "Enginuity",
-    "cluster": "R&D",
-    "program": "Aerospace and Defense",
-    "description": "Specialize in defense and aerospace, addressing global security challenges with state-of-the-art system design, maintenance, and mission-critical applications. + Design for EMC/EMI Certified Products/Systems + ASME, MIL-STD, ANSI, ISO Compliant Design Solutions + Advanced System Design + Supporting Maintenance & Overhaul Companies + Custom Aerospace & Defense Engineering + Component Manufacturing, R&O, and Assembly + Harsh Environments Engineering + Prototyping for Aerospace and Defense",
-    "link": "https://enginuityinc.ca/aerospace-and-defense/"
-  },
-  {
-    "ecosystem": "Sector Specific Resources",
-    "organization": "Enginuity",
-    "cluster": "R&D",
-    "program": "Marine Engineering",
-    "description": "Develop specialized marine solutions for operators in the commercial, defence, renewable energy, and academic research sectors. From vessel automation, launch and retrieval, high-load handling, winches, subsea systems and many things in between, all our designs are built with fatigue, resistance, precision control, and long-term reliability in mind. + Finite Element Analysis (FEA) + Non-Destructive Testing (NDT) + Computational Fluid Dynamics (CFD) + Offshore Engineering + Mooring & Stability Engineering + Harsh Environment Engineering & Decommissioning",
-    "link": "https://enginuityinc.ca/marine-engineering-services/"
-  },
-  {
-    "ecosystem": "Sector Specific Resources",
-    "organization": "Enginuity",
-    "cluster": "R&D",
-    "program": "Product Development",
-    "description": "Enginuity’s product development service supports startups, inventors, and engineering teams across industries—reducing risk, shortening the development lifecycle, and unlocking cost-effective paths to market.",
-    "link": "https://enginuityinc.ca/product-development/"
-  },
-  {
-    "ecosystem": "Sector Specific Resources",
-    "organization": "Enginuity",
-    "cluster": "R&D",
-    "program": "Smart Manufacturing",
-    "description": "Optimize your manufacturing automation processes to achieve greater efficiency, minimized downtime, and enhanced profitability. + Real-time Control with HMI & SCADA + PLC Automation & Programming + Industrial Engineering + Machine Vision for Smart Manufacturing + Custom Machine Design and Build + Picking, Packaging, Assembly, and Palletization",
-    "link": "https://enginuityinc.ca/industry-4-0-and-smart-manufacturing-automation/"
-  },
-  {
-    "ecosystem": "Sector Specific Resources",
-    "organization": "Nova Scotia Product Design and Development Centre",
-    "cluster": "Dalhousie University",
-    "program": "Product Design Center",
-    "description": "The Nova Scotia Product Design and Development Centre is a contract design engineering lab in the Faculty of Engineering at Dalhousie University that consults and develops early stage discovery of products and processes to solve real, multidisciplinary industrial problems.The NSPDDC provides innovative research and development for the SME industry in Nova Scotia with a focus on providing small and medium size enterprises multi-disciplinary research to facilitate increased competitiveness in their respective markets.",
-    "link": "https://nspddc.ca/"
-  },
-  {
-    "ecosystem": "Sector Specific Resources",
-    "organization": "Ocean Technology Council of NS (OTCNS)",
-    "cluster": "Business Support",
-    "program": "B2B Services",
-    "description": "Partnering with provincial and federal governments and academic institutes and research establishments we create opportunities for our members to participate in targeted international business missions and trade exhibitions with the purpose to investigate and maximize international market development and engagement in appropriate global supply chains. We facilitate business to business services to introduce our companies to a global market. National and International missions include the Oceanology, Oceans Business, Oceans, and DSEi etc.",
-    "link": "https://otcns.ca/about"
-  },
-  {
-    "ecosystem": "Sector Specific Resources",
-    "organization": "Ocean Technology Council of NS (OTCNS)",
-    "cluster": "Membership",
-    "program": "Ocean Tech Company Portal",
-    "description": "Database of member companies in ocean tech sector. Membership provides networking, learning, business development, innovation and commercialization events, as well advocating on behalf of our members.",
-    "link": "https://otcns.ca/members"
   }
 ];
 window.CAPABILITY_CLUSTERS = [
@@ -713,13 +593,10 @@ window.CAPABILITY_CLUSTERS = [
   "Applied Intelligence & Information System",
   "Biofouling, Chemistry and Environmental Sciences",
   "Biology",
-  "Business Support",
   "CNA Office of Applied Research and Innovation",
   "Chemistry",
   "Climate technologies & Clean energy Research Cluster",
   "Community Economies & Ecologies",
-  "Competitiveness",
-  "Dalhousie University",
   "Energy & Environment",
   "Engineering & Construction",
   "Engineering - Civil",
@@ -731,19 +608,13 @@ window.CAPABILITY_CLUSTERS = [
   "Environment & Geology",
   "Environment & Science",
   "Environment - Geology - Marine",
-  "Financial/ Funding",
   "Health & Wellness",
   "Maritime Operations",
-  "Membership",
   "Ocean Safety",
   "Ocean Technology",
-  "R&D",
-  "Research Center",
   "Research in Science & Engineering",
-  "Safety & Security",
   "Science",
   "Society & Community",
-  "Space & Collaboration",
   "Sustainable Ocean Research Cluster",
   "Technology",
   "Technology & Data Analytics",
