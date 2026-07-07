@@ -284,6 +284,12 @@ html, body {
 }
 .optional, .req { color: var(--ink-faint); font-weight: 400; font-size: 0.85em; }
 .req { color: var(--green-bright); }
+.consent-line {
+  color: var(--ink-faint);
+  font-size: 0.7rem;
+  line-height: 1.4;
+  margin: 10px 0 0;
+}
 textarea, .text-input {
   width: 100%;
   background: var(--navy-900);
